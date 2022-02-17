@@ -10,7 +10,7 @@ if (!IS_AJAX) {
 
 $file = isset($_FILES['files'] ['tmp_name']) ? $_FILES ['files']['tmp_name'] : '';
 $responses = ['error' => 'false'];
-$file_name = $_POST['file_name'];
+$file_name = $_POST['file_name']; //clé qui contient le chemin temporaire vers le serveur
 
 
 if (isset($_POST['file'])) {
@@ -29,7 +29,7 @@ if ($file !== '') {
             "image/jpg",
         ];
 
-        if (!in_array($_FILES['file']["type"], $authorized_format_file)) {
+        if (!in_array($_FILES['file']["type"], $authorized_format_file)) { //si format est bon, le test en front doit être fait en back aussi
             $responses[] = 'Format invalide';
             _addError();
         }
@@ -37,7 +37,7 @@ if ($file !== '') {
         $folder_user = "vds_" . ((string) rand(10000,900000) . '_' . time());
 
         while (is_dir($folder_user)) {
-            $folder_user = "vds_" . ((string) rand(10000, 990000) . '_' . time());
+            $folder_user = "vds_" . ((string) rand(10000, 990000) . '_' . time()); //nom unique
         }
 
         $create_dir = mkdir($folder_user, 0755);
@@ -50,14 +50,15 @@ if ($file !== '') {
     }
 }
 
+if ($responses['error'] = 'false') {
+    unset($reponses['error']); //supprime la chaine de caractères
+}
+
+print json_encode($responses);
+
 function _addError() {
     $responses['error'] = 'true';
     // print json_encode($responses);
     exit;
 }
 
-if ($responss['error'] = 'false') {
-    unset($reponses['error']);
-}
-
-print json_encode($responses);
