@@ -68,12 +68,13 @@ function saveFiles(file: File) {
         processData: false,
         data: formData,
         type: 'POST',
+
         success: function(response: serveurResponse) {
             if (response.error !== undefined) {
                 return false;
             }
-            let mon_message = response[0] ? response[0] : "";
-            let html =
+            let mon_message : string = response[0] ? response[0] : "";
+            let html: string =
                 `<div class="px-5">
                     <span class="text-light">${mon_message}</span>
                 </div>`;
@@ -91,7 +92,7 @@ function saveFiles(file: File) {
 
         },
 
-        error: function(error: ) {
+        error: function(error: JQuery.jqXHR<any>) {
             console.log(error);
         }
     });
