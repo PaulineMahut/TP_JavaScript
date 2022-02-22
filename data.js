@@ -13,6 +13,7 @@ const fetchSaveFiles = () => {
         "image/jpeg",
         "image/jpg",
     ];
+
     if (fileList.length < 1) {
         alert("Add a video");
         return false;
@@ -42,12 +43,14 @@ function saveFiles(file) {
     var formData = new FormData();
     formData.set('file', file);
     formData.set('file_name', file.name);
+
+    // Spinner
     spinner.classList.remove('hidden-spinner');
 
 
     $.ajax({
         url: '/run.php',
-        dataType: 'text',
+        dataType: 'json',
         cache: false,
         contentType: false,
         processData: false,
@@ -66,12 +69,15 @@ function saveFiles(file) {
 
             $("#form_controller").append($(html));
 
+
+            // Spinner 
             if (checkedFile = fileList) {
                 console.log("ça marche mon reuf mtn laisse moi dormir stp");
                 spinner.classList.add('hidden-spinner');
             } else {
                 console.log("ça va pas du tout mon reuf");
             }
+
         },
 
         error: function(error) {
