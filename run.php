@@ -8,7 +8,9 @@ if (!IS_AJAX) {
     die('Restricted access');
 }
 
-$file = isset($_FILES['files'] ['tmp_name']) ? $_FILES ['files']['tmp_name'] : '';
+$file = isset($_FILES['file']['tmp_name']) ? $_FILES ['file']['tmp_name'] : '';
+var_dump($_FILES, $_POST);
+exit;
 $responses = ['error' => 'false'];
 $file_name = $_POST['file_name']; //clé qui contient le chemin temporaire vers le serveur
 
@@ -29,6 +31,7 @@ if ($file !== '') {
             "image/jpg",
         ];
 
+        //ce qu'on cherche dans le tableau qu'on cherche
         if (!in_array($_FILES['file']["type"], $authorized_format_file)) { //si format est bon, le test en front doit être fait en back aussi
             $responses[] = 'Format invalide';
             _addError();
@@ -50,7 +53,7 @@ if ($file !== '') {
     }
 }
 
-if ($responses['error'] = 'false') {
+if ($responses['error'] == 'false') {
     unset($reponses['error']); //supprime la chaine de caractères
 }
 
@@ -58,7 +61,7 @@ print json_encode($responses);
 
 function _addError() {
     $responses['error'] = 'true';
-    // print json_encode($responses);
+    print json_encode($responses);
     exit;
 }
 
